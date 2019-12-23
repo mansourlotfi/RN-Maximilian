@@ -4,14 +4,19 @@ import GoalItem from './components/GoalItem'
 import GoalInput from './components/GoalInput'
 
 export default function App() {
-  const [courseGoals,setCourseGouals] = useState([]);
+  const [currentGoals,setCourseGouals] = useState([]);
 
 
   
 
   const addGoalHandler = goalTitle => {
-    setCourseGouals(courseGoals => [...courseGoals,{id: Math.random().toString(), value : goalTitle}])
+    setCourseGouals(currentGoals => [...currentGoals,{id: Math.random().toString(), value : goalTitle}])
   };
+  const removeGoalHandler = goalId => {
+    setCourseGouals(currentGoals => {
+      return currentGoals.filter((goal) => goal.id !== goalId)
+    }) 
+  }
 
   return (
     <View style={styles.screen}>
@@ -25,8 +30,8 @@ export default function App() {
     {/* for infinit and long list use flatlist */}
     <FlatList 
     keyExtractor={(item,index) => item.id}
-    data={courseGoals}
-    renderItem={itemData => ( <GoalItem onDelete={() => alert(itemData.item.value)} title={itemData.item.value} />  
+    data={currentGoals}
+    renderItem={itemData => ( <GoalItem id={itemData.item.id} onDelete={removeGoalHandler} title={itemData.item.value} />  
     )}
     />
 
