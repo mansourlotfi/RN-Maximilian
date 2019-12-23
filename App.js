@@ -13,17 +13,21 @@ export default function App() {
 
   const addGoalHandler = goalTitle => {
     setCourseGouals(currentGoals => [...currentGoals,{id: Math.random().toString(), value : goalTitle}])
+    setIsAddMod(false)
   };
   const removeGoalHandler = goalId => {
     setCourseGouals(currentGoals => {
       return currentGoals.filter((goal) => goal.id !== goalId)
     }) 
   }
+  const cancelGoalAditionHandler = () => {
+    setIsAddMod(false)
+  }
 
   return (
     <View style={styles.screen}>
       <Button title='Add new goal' onPress={() => setIsAddMod(true)} />
-      <GoalInput visible={isAddMod} onAddGoal={addGoalHandler} />
+      <GoalInput visible={isAddMod} onAddGoal={addGoalHandler} onCancel={cancelGoalAditionHandler} />
     
     {/* scroolView is good for limited list items but coz performance problem if use in long list items. for long list must use flatlist
     <ScrollView>
