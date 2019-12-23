@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View,TextInput,Button,ScrollView,FlatList } from 'react-native';
+import { StyleSheet, View,Button,FlatList } from 'react-native';
 import GoalItem from './components/GoalItem'
 import GoalInput from './components/GoalInput'
 
 export default function App() {
   const [currentGoals,setCourseGouals] = useState([]);
+  const [isAddMod,setIsAddMod] = useState('false')
+
 
 
   
@@ -20,7 +22,8 @@ export default function App() {
 
   return (
     <View style={styles.screen}>
-      <GoalInput onAddGoal={addGoalHandler} />
+      <Button title='Add new goal' onPress={() => setIsAddMod(true)} />
+      <GoalInput visible={isAddMod} onAddGoal={addGoalHandler} />
     
     {/* scroolView is good for limited list items but coz performance problem if use in long list items. for long list must use flatlist
     <ScrollView>
