@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { StyleSheet, Text, View,TextInput,Button,ScrollView } from 'react-native';
+import { StyleSheet, Text, View,TextInput,Button,ScrollView,FlatList } from 'react-native';
 
 export default function App() {
   const [enteredGoal,setEnteredGoal]= useState('');
@@ -11,7 +11,7 @@ export default function App() {
   };
 
   const addGoalHandler = () => {
-    setCourseGouals(courseGoals => [...courseGoals,enteredGoal])
+    setCourseGouals(courseGoals => [...courseGoals,{id: Math.random().toString(), value : enteredGoal}])
   };
 
   return (
@@ -24,9 +24,21 @@ export default function App() {
       value={enteredGoal} />
       <Button title='ADD' onPress={addGoalHandler} />
     </View>
+    {/* scroolView is good for limited list items but coz performance problem if use in long list items. for long list must use flatlist
     <ScrollView>
   {courseGoals.map((goal) => <View key={goal} style={styles.listItems}><Text  >{goal}</Text></View>)}
-    </ScrollView>
+    </ScrollView> */}
+
+    {/* for infinit and long list use flatlist */}
+    <FlatList 
+    keyExtractor={(item,index) => item.id}
+    data={courseGoals}
+    renderItem={itemData => (
+      <View style={styles.listItems}>
+    <text>{itemData.item.value}</text>
+      </View>
+    )}
+    />
 
     </View>
   );
